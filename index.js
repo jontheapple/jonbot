@@ -1,43 +1,64 @@
 const Discord = require('discord.js');
+const {botkey, jonId} = require("./config.json");
 const client = new Discord.Client();
+
+// const heart = client.emojis.find(emoji => emoji.name === "joy");
+
+const chats = {
+	jonbot: "Hello! I am Jonbot, a bot made by Jon, designed to chat exactly the way Jon would. Pleased to meet you!",
+	umi: "That's my waifuuuu~ <3",
+	jonGreet: "Hello!",
+	cutegirl: "*sweats nervously*",
+	miko: "Mikooooo so cute <3",
+	waifu: "My waifu? It's Umi, of course! She's my one true waifu!"
+}
 
 client.once('ready', () => {
 	console.log('Ready!');
 });
 
 client.on('message', message => {
+	//My bot should ignore me
+	if (message.author.id === jonId) {
+		return;
+	}
+	
+	for (const chat in chats){
+		if (message.content === chats[chat]){
+			return;
+		}
+	}
 	const content = message.content.toLowerCase().replace(/[@.,?;:()!~]/g, "");
-	if (content === "hello i am jonbot a bot made by jon designed to chat exactly the way jon would pleased to meet you") return;
 	if (checkForString(content, "jonbot")){
-		message.channel.send("Hello! I am Jonbot, a bot made by Jon, designed to chat exactly the way Jon would. Pleased to meet you!");
+		message.channel.send(chats.jonbot);
 		return;
 	}
 
 	if (checkForString(content, "umi")) {
-		message.channel.send("That's my waifuuuu~ <3");
+		message.channel.send(chats.umi);
 	}
 	if (checkForString(content, "jon") || checkForString(content, "jonathan")){
 		// console.log(content);
 		const hello = ["hi", "hello", "whats up", "yo", "hey"];
 		for (const hi of hello){
 			if (checkForString(content, hi)){
-				message.channel.send("Hello!");
+				message.channel.send(chats.jonGreet);
 				break;
 			}
 		}
 	}
 	if (checkForString(content, "cute girl") || checkForString(content, "cute girls")){
-		message.channel.send("*sweats nervously*");
+		message.channel.send(chats.cutegirl);
 	}
 	if (checkForString(content, "miko")){
-		message.channel.send("If I become good at dancing, will Miko-chan notice me?");
+		message.channel.send(chats.miko);
 	}
 	if (checkForString(content, "waifu")){
-		message.channel.send("It's Umi, of course! She's my one true waifu!");
+		message.channel.send(chats.waifu);
 	}
 });
 
-client.login(process.env.JONBOT_KEY);
+client.login(botkey);
 
 function checkForString(word, match){
 	return word === match || word.includes(` ${match} `) || word.startsWith(`${match} `) || word.endsWith(` ${match}`);
