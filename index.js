@@ -8,10 +8,15 @@ client.once('ready', () => {
 client.on('message', message => {
 	const content = message.content.toLowerCase().replace(/[.,?;:()!~]/g, "");
 	if (content === "hello i am jonbot a bot made by jon designed to chat exactly the way jon would pleased to meet you") return;
+	if (checkForString(content, "jonbot")){
+		message.channel.send("Hello! I am Jonbot, a bot made by Jon, designed to chat exactly the way Jon would. Pleased to meet you!");
+		return;
+	}
+
 	if (checkForString(content, "umi")) {
 		message.channel.send("That's my waifuuuu~ <3");
 	}
-	if (checkForString(content, "jon")){
+	if (checkForString(content, "jon") || checkForString(content, "jonathan")){
 		// console.log(content);
 		const hello = ["hi", "hello", "whats up", "yo", "hey"];
 		for (const hi of hello){
@@ -24,8 +29,8 @@ client.on('message', message => {
 	if (checkForString(content, "cute girl") || checkForString(content, "cute girls")){
 		message.channel.send("*sweats nervously*");
 	}
-	if (checkForString(content, "jonbot")){
-		message.channel.send("Hello! I am Jonbot, a bot made by Jon, designed to chat exactly the way Jon would. Pleased to meet you!");
+	if (checkForString(content, "miko")){
+		message.channel.send("If I become good at dancing, will Miko-chan notice me?");
 	}
 });
 
