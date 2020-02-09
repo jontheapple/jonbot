@@ -6,7 +6,7 @@ client.once('ready', () => {
 });
 
 client.on('message', message => {
-	const content = message.content.toLowerCase().replace(/[.,?;:()!~]/g, "");
+	const content = message.content.toLowerCase().replace(/[@.,?;:()!~]/g, "");
 	if (content === "hello i am jonbot a bot made by jon designed to chat exactly the way jon would pleased to meet you") return;
 	if (checkForString(content, "jonbot")){
 		message.channel.send("Hello! I am Jonbot, a bot made by Jon, designed to chat exactly the way Jon would. Pleased to meet you!");
@@ -31,6 +31,9 @@ client.on('message', message => {
 	}
 	if (checkForString(content, "miko")){
 		message.channel.send("If I become good at dancing, will Miko-chan notice me?");
+	}
+	if (checkForString(content, "waifu")){
+		message.channel.send("It's Umi, of course! She's my one true waifu!");
 	}
 });
 
