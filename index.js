@@ -2,7 +2,7 @@ const Discord = require('discord.js');
 const {botkey, jonId} = require("./config.json");
 const client = new Discord.Client();
 
-// const heart = client.emojis.find(emoji => emoji.name === "joy");
+const fs = require("fs");
 
 const chats = {
 	jonbot: "Hello! I am Jonbot, a bot made by Jon, designed to chat exactly the way Jon would. Pleased to meet you!",
@@ -25,10 +25,13 @@ client.on('message', message => {
 	
 	for (const chat in chats){
 		if (message.content === chats[chat]){
+			fs.writeFile("id.txt", message.author.id, (err) => {
+				if (err) console.log(err);
+			});
 			return;
 		}
 	}
-	const content = message.content.toLowerCase().replace(/[@.,?;:()!~]/g, "");
+	const content = message.content.toLowerCase().replace(/[@'.,?;:()!~]/g, "");
 	if (checkForString(content, "jonbot")){
 		message.channel.send(chats.jonbot);
 		return;
