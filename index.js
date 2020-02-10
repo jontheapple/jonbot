@@ -6,10 +6,10 @@ const client = new Discord.Client();
 
 const chats = {
 	jonbot: "Hello! I am Jonbot, a bot made by Jon, designed to chat exactly the way Jon would. Pleased to meet you!",
-	umi: "That's my waifuuuu~ <3",
+	umi: "That's my waifuuuu~ :heart::heart_eyes::blue_heart:",
 	jonGreet: "Hello!",
 	cutegirl: "*sweats nervously*",
-	miko: "Mikooooo so cute <3",
+	miko: "Mikooooo so cute :heart:",
 	waifu: "My waifu? It's Umi, of course! She's my one true waifu!"
 }
 
