@@ -40,6 +40,8 @@ client.on('message', message => {
 		} else if (content === "jonbot roll a dice"){
 			var rng = Math.floor(Math.random() * 6) + 1;
 			message.channel.send(`You rolled a ${rng}`);
+		} else if (content === "endgame"){
+			gaming = false;
 		}
 		return;
 	}
@@ -63,7 +65,7 @@ client.on('message', message => {
 				message.channel.send("Ending game");
 				return;
 			}
-			game.gameLoop(content, message.channel);
+			gaming = game.gameLoop(content, message.channel);
 			return;
 		}
 	}
