@@ -6,7 +6,7 @@ var game = {
 	"gameIntro" : async function intro(channel){
 		await channel.send("You are sitting in the living room of your house, bored out of your mind. \"Aw man, I'm bored out of my mind\", you think to yourself. Wow, isn't this just a quality text based adventure game? Go and praise Jon later.", {file: "./images/livingroom.jpg"});
 		channel.send("Anyways, what would you like to do?\n1. Play video games\n2. Browse the internet\n3. Twiddle your thumbs\n\n(To pick an option, simply chat that number. For example, to twiddle your thumbs, chat \"3\". To end the game, chat \"endgame\")");
-		location = 0;
+		location = 23;
 		power = true;
 		twiddled = false;
 	},
@@ -83,7 +83,7 @@ var game = {
 			case 2:
 				if (content === "1"){
 					channel.send("You pull out your phone. It's Jonbot calling you back! You accept the call and put the phone to your ear.");
-					channel.send("\n**Jonbot**: HELLO! I AM RUNNING CALL_BACK.EXE! WHAT IS IN THE UPWARDS VERTICAL DIRECTION?\n**You**: Okay, I know you're a robot and everything, but can you cut that out?\n**Jonbot**: Aw come on man, you're no fun.\n**You**: Sorry, I've been bored for a while, and the power went out, so I'm in a bit of a bad mood right now.\n**Jonbot**: Oh, yeah that sucks. Can even practice Super Smash Bros, am I right? Well, I just got done with some errands, so if you want, I can meet up and hang out for a while, since I'm already out.\n**You**: Yeah, I'm down. I'll meet you at the park?\n**Jonbot**: Yeah, sounds good. See you in a bit.");
+					channel.send("\n**Jonbot**: HELLO! I AM RUNNING CALL_BACK.EXE! WHAT IS IN THE UPWARDS VERTICAL DIRECTION?\n**You**: Okay, I know you're a robot and everything, but can you cut that out?\n**Jonbot**: Aw come on man, you're no fun.\n**You**: Sorry, I've been bored for a while, and the power went out, so I'm in a bit of a bad mood right now.\n**Jonbot**: Oh, yeah that sucks. Can't even practice Super Smash Bros, am I right? Well, I just got done with some errands, so if you want, I can meet up and hang out for a while, since I'm already out.\n**You**: Yeah, I'm down. I'll meet you at the park?\n**Jonbot**: Yeah, sounds good. See you in a bit.");
 					channel.send("Chat \"next\" to continue");
 					location = 3;
 				} else{
@@ -218,7 +218,7 @@ var game = {
 					channel.send("The door is etched with some words. It reads \"Jonbot vital component #1 in here\". Wow, so much for a well hidden component. As you start to look for a way in, you notice the words on the door starting to morph. A few moments later, it reads \"What is Jonbot's favorite hair color on anime girls?\".");
 					location = 14;
 				} else {
-					channel.send("That doesn't sound right...");
+					channel.send("Incorrect.");
 				}
 				break;
 			case 14:
@@ -245,7 +245,7 @@ var game = {
 				if (content === "next"){
 					await channel.send("A weird looking rabbit walks up to you. \"Hi! Let's play hide-and-seek!\", it says. You don't have time for this, but it runs off before you can say anything. Ugh.", {file: "./images/rabbit.png"});
 					channel.send("Wait, it dropped something. It looks like a small card that isn't worth the time for me to go and draw right now, so I'll just tell you what it says:")
-					channel.send("```\nAnswer: ???\n1. The 20th letter of the alphabet\n2. The smallest positive integer divisible by 12 and 16\n```");
+					channel.send("```\nAnswer Format: ???\n1. The 20th letter of the alphabet\n2. The smallest positive integer divisible by 12 and 16\n```");
 					location = 17;
 				} else {
 					channel.send("Chat \"next\" to continue");
@@ -256,8 +256,10 @@ var game = {
 					await channel.send("Whoa, a double question. That's a new one, but at least this one was pretty simple. The fact that it gave you the number of characters in the answer was helpful too.", {file: "./images/rabbit.png"});
 					channel.send("**Rabbit**: Hey, you're pretty good! But I went easy on you. This time, you DEFINITELY won't find me!\n" + 
 						"Again, it drops a card that I'm not going to bother drawing. It reads:");
-					channel.send("```\n1. How many days are there from Jan 1, 1900 to Dec 31, 1910\n2. 2, 3, 5, 7, ..., 89, 97, 101, ?\n3. What is the capital of South Carolina?\n```");
+					channel.send("```\n1. How many days are there from Jan 1, 1900 to Dec 31, 1910 (Including both of those two days)\n2. 2, 3, 5, 7, 11, 13, ..., 89, 97, 101, ?\n3. What is the capital of South Carolina?\n```");
 					location = 18;
+				} else if (content === "t 48"){
+					channel.send("Close. Pay attention to the first line of the card");
 				} else {
 					channel.send("Incorrect.");
 				}
@@ -331,15 +333,19 @@ var game = {
 				break;
 			case 24:
 				if (content === "next"){
-					await channel.send("**Jonbot**: Hey! HEY! WAKE UP!\n**You**: Huh? Whuh...what?\n**Jonbot**: I've been looking all over the park for you, but it turns out you were sleeping here the whole time!", {file: "./images/park.jpg"});
+					await channel.send("You wake up to someone shaking you...\n**Jonbot**: Hey! HEY! WAKE UP!\n**You**: Huh? Whuh...what?\n**Jonbot**: I've been looking all over the park for you, but it turns out you were sleeping here the whole time!", {file: "./images/park.jpg"});
 					channel.send("Wait...what? You were trying to grab that sail, you were so close! And you met this really cute rabbit! Was it all a dream?");
 					channel.send("**Jonbot**: Oh well, come on! My power's not out, so let's go to my place and play Super Smash Bros!");
 					await channel.send("Jonbot runs off ahead of you while you get up from the table. What a crazy dream. Jonbot had been destroyed, and you went around to all these weird places solving all these puzzles, and you met that one UMI Agent. What was his name? You can't remember. As you run to catch up with Jonbot, you notice something's in your back pocket.", {file: "./images/Adonos Card.png"});
 					channel.send("Oh. Oh my...\n\n**Thanks for playing Jonbot Adventure! There are many more mysteries to be solved! Who is Agent Adonos, really? Who is the creator of Jonbot? Who destroyed Jonbot in the first place? And how did everything turn out to be a dream, but not really? Pray that I make a sequel, because honestly I don't know if I'll make another one of these LOL**");
+					location = 25;
 					return false;
 				} else {
 					channel.send("Chat \"next\" to continue");
 				}
+				break;
+			case 25:
+				return false;
 		}
 		return true;
 	}

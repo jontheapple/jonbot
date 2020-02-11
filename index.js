@@ -7,6 +7,7 @@ const game = require("./game.js");
 const fs = require("fs");
 
 var gaming = false;
+var gamePromise = null;
 var gameChannel;
 
 const chats = {
@@ -52,6 +53,7 @@ client.on('message', message => {
 			gameChannel = message.channel;
 			game.gameIntro(gameChannel);
 			gaming = true;
+			gamePromise = null;
 		} else {
 			message.channel.send("Game is already running");
 		}
@@ -65,7 +67,14 @@ client.on('message', message => {
 				message.channel.send("Ending game");
 				return;
 			}
-			gaming = game.gameLoop(content, message.channel);
+			if (gamePromise){
+				gamePromise.then(function(result) {
+					if (!result){
+						gaming = result;
+					}
+				});
+			}
+			gamePromise = game.gameLoop(content, message.channel);
 			return;
 		}
 	}
