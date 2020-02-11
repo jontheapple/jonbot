@@ -69,15 +69,6 @@ client.on('message', message => {
 			return;
 		}
 	}
-	
-	for (const chat in chats){
-		if (message.content === chats[chat]){
-			fs.writeFile("id.txt", message.author.id, (err) => {
-				if (err) console.log(err);
-			});
-			return;
-		}
-	}
 
 	if (checkForString(content, "jonbot")){
 		message.channel.send(chats.jonbot);
