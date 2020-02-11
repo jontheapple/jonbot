@@ -4,10 +4,9 @@ const client = new Discord.Client();
 
 const game = require("./game.js");
 
-const fs = require("fs");
+// const fs = require("fs");
 
 var gaming = false;
-var gamePromise = null;
 var gameChannel;
 
 const chats = {
@@ -25,7 +24,12 @@ client.once('ready', () => {
 
 client.on('message', message => {
 	//Jonbot should ignore itself
-	if (message.author.id === botId) return;
+	if (message.author.id === botId) {
+		if (message.content === "Ending game"){
+			gaming = false;
+		}
+		return;
+	}
 
 	const content = message.content.toLowerCase().replace(/[@'.,?;:()!~]/g, "");
 
@@ -42,6 +46,7 @@ client.on('message', message => {
 			var rng = Math.floor(Math.random() * 6) + 1;
 			message.channel.send(`You rolled a ${rng}`);
 		} else if (content === "endgame"){
+			message.channel.send("Ending game");
 			gaming = false;
 		}
 		return;
@@ -53,7 +58,6 @@ client.on('message', message => {
 			gameChannel = message.channel;
 			game.gameIntro(gameChannel);
 			gaming = true;
-			gamePromise = null;
 		} else {
 			message.channel.send("Game is already running");
 		}
@@ -61,20 +65,13 @@ client.on('message', message => {
 	}
 
 	if (gaming){
-		if (message.channel === gameChannel){
+		if (gaming && message.channel === gameChannel){
 			if (content === "endgame"){
 				gaming = false;
 				message.channel.send("Ending game");
 				return;
 			}
-			if (gamePromise){
-				gamePromise.then(function(result) {
-					if (!result){
-						gaming = result;
-					}
-				});
-			}
-			gamePromise = game.gameLoop(content, message.channel);
+			game.gameLoop(content, message.channel);
 			return;
 		}
 	}
