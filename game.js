@@ -207,7 +207,7 @@ var game = {
 				if (content === "1901"){
 					channel.send("You find yourself standing in front of the temple.");
 					await channel.send({file: "./images/temple.jpg"});
-					channel.send("The door is etched with some words. It reads \"Jonbot vital component #1 in here\". Wow, so much these things being well hidden. As you start to look for a way in, you notice the words on the door starting to morph. A few moments later, it reads \"What is Jonbot's favorite hair color on anime girls?\".");
+					channel.send("The door is etched with some words. It reads \"Jonbot vital component #1 in here\". Wow, so much for these things being well hidden. As you start to look for a way in, you notice the words on the door starting to morph. A few moments later, it reads \"What is Jonbot's favorite hair color on anime girls?\".");
 					location = 14;
 				} else {
 					channel.send("Incorrect.");
