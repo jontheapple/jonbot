@@ -31,26 +31,47 @@ client.on('message', message => {
 		return;
 	}
 
-	const content = message.content.toLowerCase().replace(/[@'.,?;:()!~]/g, "");
+	//remove punctuation, except not periods, because i need those for decimals
+	const jonContent = message.content.toLowerCase().replace(/[@',%\?;:\(\)!~]/g, "");
 
 	//My bot should behave differently for me
 	if (message.author.id === jonId) {
-		if (content === "jonbot flip a coin"){
+		if (jonContent === "jonbot flip a coin"){
 			var rng = Math.floor(Math.random() * 2);
 			if (rng === 0){
 				message.channel.send("Heads");
 			} else {
 				message.channel.send("Tails");
 			}
-		} else if (content === "jonbot roll a dice"){
+		} else if (jonContent === "jonbot roll a dice"){
 			var rng = Math.floor(Math.random() * 6) + 1;
 			message.channel.send(`You rolled a ${rng}`);
-		} else if (content === "endgame"){
+		} else if (jonContent === "endgame"){
 			message.channel.send("Ending game");
-			gaming = false;
+		} else if (jonContent.match(/jonbot what is \d+(\.\d+)* of \d+(\.\d+)*/)){
+			var vals = jonContent.split(" ");
+			var percent = parseFloat(vals[3]);
+			var denom = parseFloat(vals[5]);
+			var numer = Math.round(denom * percent) / 100;
+			message.channel.send(`${numer} is ${percent}% of ${denom}`);
+		} else if (jonContent.match(/jonbot \d+(\.\d+)* is what of \d+(\.\d+)*/)){
+			var vals = jonContent.split(" ");
+			var numer = parseFloat(vals[1]);
+			var denom = parseFloat(vals[5]);
+			var percent = Math.round(numer * 10000 / denom) / 100;
+			message.channel.send(`${numer} is ${percent}% of ${denom}`);
+		} else if (jonContent.match(/jonbot \d+(\.\d+)* is \d+(\.\d+)* of what/)){
+			var vals = jonContent.split(" ");
+			var numer = parseFloat(vals[1]);
+			var percent = parseFloat(vals[3]);
+			var denom = Math.round(numer*10000 / percent) / 100;
+			message.channel.send(`${numer} is ${percent}% of ${denom}`);
 		}
 		return;
 	}
+
+	//now remove periods
+	const content = jonContent.replace(/\./g, "");
 
 	if (content === "jonbotadventure"){
 		if (!gaming){
@@ -67,7 +88,6 @@ client.on('message', message => {
 	if (gaming){
 		if (gaming && message.channel === gameChannel){
 			if (content === "endgame"){
-				gaming = false;
 				message.channel.send("Ending game");
 				return;
 			}
