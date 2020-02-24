@@ -66,6 +66,8 @@ client.on('message', message => {
 			var percent = parseFloat(vals[3]);
 			var denom = Math.round(numer*10000 / percent) / 100;
 			message.channel.send(`${numer} is ${percent}% of ${denom}`);
+		} else if (jonContent === "thanks jonbot"){
+			message.channel.send("Gotchu, fam.");
 		}
 		return;
 	}
