@@ -1,8 +1,10 @@
 const Discord = require('discord.js');
 const {botkey, jonId, botId} = require("./config.json");
+const {otherBirthdays, appleBirthdays} = require("./birthdays.json");
 const client = new Discord.Client();
 
 const game = require("./game.js");
+const sender = require("./sender.js");
 
 // const fs = require("fs");
 
@@ -18,8 +20,27 @@ const chats = {
 	waifu: "My waifu? It's Umi, of course! She's my one true waifu!"
 }
 
-client.once('ready', () => {
+client.once('ready', async () => {
 	console.log('Jonbot online!');
+
+	var print = "";
+
+	var appleBirthdayPeople = Object.keys(appleBirthdays);
+	var today = new Date();
+	var birthday = new Date(appleBirthdays.dummy);
+
+	for (const person of appleBirthdayPeople){
+		var birthday = new Date(appleBirthdays[person]);
+		if (today.getMonth() === birthday.getMonth() && today.getDate() === birthday.getDate()){
+			sender.findAndSend(client, "Applesquad", "applesquad-chat", "Happy Birthday, " + person.charAt(0).toUpperCase() + person.slice(1) + "!");
+		}
+	}
+	
+	var otherBirthdaysPeople = Object.keys(otherBirthdays);
+	for (const person of otherBirthdaysPeople){
+		var target = await client.fetchUser(otherBirthdays[person]["id"]);
+		target.send("Happy Birthday, " + person.charAt(0).toUpperCase() + person.slice(1) + "!");
+	}
 });
 
 client.on('message', message => {
@@ -74,6 +95,10 @@ client.on('message', message => {
 
 	//now remove periods
 	const content = jonContent.replace(/\./g, "");
+
+	if (content === "test"){
+
+	}
 
 	if (content === "jonbotadventure"){
 		if (!gaming){
