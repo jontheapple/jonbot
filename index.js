@@ -23,12 +23,10 @@ const chats = {
 client.once('ready', async () => {
 	console.log('Jonbot online!');
 
-	var print = "";
 
-	var appleBirthdayPeople = Object.keys(appleBirthdays);
 	var today = new Date();
-	var birthday = new Date(appleBirthdays.dummy);
-
+	
+	var appleBirthdayPeople = Object.keys(appleBirthdays);
 	for (const person of appleBirthdayPeople){
 		var birthday = new Date(appleBirthdays[person]);
 		if (today.getMonth() === birthday.getMonth() && today.getDate() === birthday.getDate()){
