@@ -36,12 +36,15 @@ client.once('ready', async () => {
 	
 	var otherBirthdaysPeople = Object.keys(otherBirthdays);
 	for (const person of otherBirthdaysPeople){
-		var target = await client.fetchUser(otherBirthdays[person]["id"]);
-		target.send("Happy Birthday, " + person.charAt(0).toUpperCase() + person.slice(1) + "!");
+		var birthday = new Date(otherBirthdaysPeople[person]);
+		if (today.getMonth() === birthday.getMonth() && today.getDate() === birthday.getDate()){
+			var target = await client.fetchUser(otherBirthdays[person]["id"]);
+			target.send("Happy Birthday, " + person.charAt(0).toUpperCase() + person.slice(1) + "!");
+		}
 	}
 });
 
-client.on('message', message => {
+client.on('message', async message => {
 	//Jonbot should ignore itself
 	if (message.author.id === botId) {
 		if (message.content === "Ending game"){
@@ -55,7 +58,23 @@ client.on('message', message => {
 
 	//My bot should behave differently for me
 	if (message.author.id === jonId) {
-		if (jonContent === "jonbot flip a coin"){
+		//if I am DMing the bot, then I am giving different commands
+		if (message.guild === null){
+			var args = jonContent.split(" ");
+			var command = args[0];
+			if (command === "message"){
+				var id = args[1];
+				var target = await client.fetchUser(id);
+				var msg = "";
+				for (var i = 2; i < args.length; i++){
+					msg += args[i] + " ";
+				}
+				target.send(msg.trim());
+			}
+		}
+		
+		//Otherwise, these commands are for use in a server
+		else if (jonContent === "jonbot flip a coin"){
 			var rng = Math.floor(Math.random() * 2);
 			if (rng === 0){
 				message.channel.send("Heads");
