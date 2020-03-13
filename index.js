@@ -10,6 +10,7 @@ const sender = require("./sender.js");
 
 var gaming = false;
 var gameChannel;
+var me;
 
 const chats = {
 	jonbot: "Hello! I am Jonbot, a bot made by Jon, designed to chat exactly the way Jon would. Pleased to meet you!\n\nTry my new adventure game by chatting \"jonbotadventure\"!",
@@ -21,10 +22,8 @@ const chats = {
 }
 
 client.once('ready', async () => {
-	console.log('Jonbot online!');
-
-
 	var today = new Date();
+	me = await client.fetchUser(jonId);
 	
 	var appleBirthdayPeople = Object.keys(appleBirthdays);
 	for (const person of appleBirthdayPeople){
@@ -42,6 +41,8 @@ client.once('ready', async () => {
 			target.send("Happy Birthday, " + person.charAt(0).toUpperCase() + person.slice(1) + "!");
 		}
 	}
+
+	console.log("Jonbot online");
 });
 
 client.on('message', async message => {
@@ -112,6 +113,13 @@ client.on('message', async message => {
 
 	//now remove periods
 	const content = jonContent.replace(/\./g, "");
+
+	//Someone (not me) is DMing Jonbot
+	if (message.guild === null){
+		me.send(message.author.username + " says:\n");
+		me.send(content);
+		return;
+	}
 
 	if (content === "test"){
 
