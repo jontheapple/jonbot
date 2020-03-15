@@ -29,7 +29,7 @@ client.once('ready', async () => {
 	for (const person of appleBirthdayPeople){
 		var birthday = new Date(appleBirthdays[person]);
 		if (today.getMonth() === birthday.getMonth() && today.getDate() === birthday.getDate()){
-			sender.findAndSend(client, "Applesquad", "applesquad-chat", "Happy Birthday, " + person.charAt(0).toUpperCase() + person.slice(1) + "!");
+			sender.findAndSend(client, "Applesquad", "applesquad-chat-🍏", "Happy Birthday, " + person.charAt(0).toUpperCase() + person.slice(1) + "!");
 		}
 	}
 	
