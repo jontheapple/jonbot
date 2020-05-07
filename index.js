@@ -18,7 +18,7 @@ const chats = {
 	jonGreet: "Hello!",
 	cutegirl: "*sweats nervously*",
 	miko: "Mikooooo so cute :heart:",
-	waifu: "My waifu? It's Umi, of course! She's my one true waifu!"
+	waifu: "Waifu? Did someone say \"waifu\"? You can't have a conversation about waifus without including meeeee..."
 }
 
 client.once('ready', async () => {
