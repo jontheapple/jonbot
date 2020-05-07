@@ -154,7 +154,11 @@ client.on('message', async message => {
 	}
 
 	if (checkForString(content, "umi")) {
-		message.channel.send(chats.umi);
+		let image = Math.floor(Math.random() * 187) + 1;
+		let fileName = "./images/Umi/";
+		if (image <= 109) fileName += image + ".jpg";
+		else fileName += (image - 109) + ".png";
+		message.channel.send(chats.umi, {file: fileName});
 	}
 	if (checkForString(content, "jon") || checkForString(content, "jonathan")){
 		// console.log(content);
