@@ -21,6 +21,22 @@ const chats = {
 	waifu: "Waifu? Did someone say \"waifu\"? You can't have a conversation about waifus without including meeeee..."
 }
 
+const eightBallChats = [
+	"Yup!",
+	"Yes!",
+	"Yeah!",
+	"Bet.",
+	"Almost certainly",
+	"It would seem to be the case",
+	"I believe so",
+	"Yaaaaaaaaaaas",
+	"Doesn't seem like it...",
+	"My Jonbot senses say it ain't so",
+	"I wouldn't count on it",
+	"That doesn't sound right...",
+	"Go ask Kyle"
+]
+
 client.once('ready', async () => {
 	var today = new Date();
 	me = await client.fetchUser(jonId);
@@ -109,6 +125,9 @@ client.on('message', async message => {
 			message.channel.send("Gotchu, fam.");
 		} else if (jonContent === "right jonbot"){
 			message.channel.send("Right, Jon!");
+		} else if (jonContent.match(/jonbot oh jonbot .+/)){
+			var rng = Math.floor(Math.random() * 12);
+			message.channel.send(eightBallChats[rng]);
 		}
 		return;
 	}
@@ -150,7 +169,10 @@ client.on('message', async message => {
 		}
 	}
 
-	if (checkForString(content, "jonbot")){
+	if (content.match(/jonbot oh jonbot .+/)){
+		var rng = Math.floor(Math.random() * 12);
+		message.channel.send(eightBallChats[rng]);
+	} else if (checkForString(content, "jonbot")){
 		message.channel.send(chats.jonbot);
 		return;
 	}
