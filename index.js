@@ -108,7 +108,7 @@ client.on('message', async message => {
 		} else if (jonContent === "thanks jonbot"){
 			message.channel.send("Gotchu, fam.");
 		} else if (jonContent === "right jonbot"){
-			message.channel.send("Right, Jon! o7");
+			message.channel.send("Right, Jon!");
 		}
 		return;
 	}
