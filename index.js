@@ -107,6 +107,8 @@ client.on('message', async message => {
 			message.channel.send(`${numer} is ${percent}% of ${denom}`);
 		} else if (jonContent === "thanks jonbot"){
 			message.channel.send("Gotchu, fam.");
+		} else if (jonContent === "right jonbot"){
+			message.channel.send("Right, Jon! o7");
 		}
 		return;
 	}
