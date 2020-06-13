@@ -126,7 +126,7 @@ client.on('message', async message => {
 		} else if (jonContent === "right jonbot"){
 			message.channel.send("Right, Jon!");
 		} else if (jonContent.match(/jonbot oh jonbot .+/)){
-			var rng = Math.floor(Math.random() * 12);
+			var rng = Math.floor(Math.random() * 13);
 			message.channel.send(eightBallChats[rng]);
 		}
 		return;
