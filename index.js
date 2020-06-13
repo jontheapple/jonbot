@@ -9,6 +9,7 @@ const sender = require("./sender.js");
 // const fs = require("fs");
 
 var gaming = false;
+var eightBallRig = "none";
 var gameChannel;
 var me;
 
@@ -21,7 +22,7 @@ const chats = {
 	waifu: "Waifu? Did someone say \"waifu\"? You can't have a conversation about waifus without including meeeee..."
 }
 
-const eightBallChats = [
+const eightBallChatsPositive = [
 	"Yup!",
 	"Yes!",
 	"Yeah!",
@@ -29,12 +30,14 @@ const eightBallChats = [
 	"Almost certainly",
 	"It would seem to be the case",
 	"I believe so",
-	"Yaaaaaaaaaaas",
+	"Yaaaaaaaaaaas"
+]
+
+const eightBallChatsNegative = [
 	"Doesn't seem like it...",
 	"My Jonbot senses say it ain't so",
 	"I wouldn't count on it",
-	"That doesn't sound right...",
-	"Go ask Kyle"
+	"That doesn't sound right..."
 ]
 
 client.once('ready', async () => {
@@ -87,6 +90,16 @@ client.on('message', async message => {
 					msg += args[i] + " ";
 				}
 				target.send(msg.trim());
+			} else if (command === "rig8ball"){
+				if (args[1] === "yes"){
+					eightBallRig = "yes";
+					me.send("Your next answer will be \"yes\"");
+				} else if (args[1] === "no"){
+					eightBallRig = "no";
+					me.send("Your next answer will be \"no\"");
+				} else{
+					me.send("I didn't understand you");
+				}
 			}
 		}
 		
@@ -126,8 +139,23 @@ client.on('message', async message => {
 		} else if (jonContent === "right jonbot"){
 			message.channel.send("Right, Jon!");
 		} else if (jonContent.match(/jonbot oh jonbot .+/)){
-			var rng = Math.floor(Math.random() * 13);
-			message.channel.send(eightBallChats[rng]);
+			if (eightBallRig === "yes"){
+				rng = Math.floor(Math.random() * eightBallChatsPositive.length);
+				message.channel.send(eightBallChatsPositive[rng]);
+			} else if (eightBallRig === "no"){
+				rng = Math.floor(Math.random() * eightBallChatsNegative.length);
+				message.channel.send(eightBallChatsNegative[rng]);
+			} else{
+				var rng = Math.floor(Math.random() * 3);
+				if (rng === 0){
+					rng = Math.floor(Math.random() * eightBallChatsNegative.length);
+					message.channel.send(eightBallChatsNegative[rng]);
+				} else {
+					rng = Math.floor(Math.random() * eightBallChatsPositive.length);
+					message.channel.send(eightBallChatsPositive[rng]);
+				}
+			}
+			eightBallRig = "none";
 		}
 		return;
 	}
@@ -170,8 +198,14 @@ client.on('message', async message => {
 	}
 
 	if (content.match(/jonbot oh jonbot .+/)){
-		var rng = Math.floor(Math.random() * 12);
-		message.channel.send(eightBallChats[rng]);
+		var rng = Math.floor(Math.random() * 3);
+		if (rng === 0){
+			rng = Math.floor(Math.random() * eightBallChatsNegative.length);
+			message.channel.send(eightBallChatsNegative[rng]);
+		} else {
+			rng = Math.floor(Math.random() * eightBallChatsPositive.length);
+			message.channel.send(eightBallChatsPositive[rng]);
+		}
 	} else if (checkForString(content, "jonbot")){
 		message.channel.send(chats.jonbot);
 		return;
