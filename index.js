@@ -56,8 +56,11 @@ client.once('ready', async () => {
 	for (const person of otherBirthdaysPeople){
 		var birthday = new Date(otherBirthdaysPeople[person]);
 		if (today.getMonth() === birthday.getMonth() && today.getDate() === birthday.getDate()){
-			var target = await client.fetchUser(otherBirthdays[person]["id"]);
-			target.send("Happy Birthday, " + person.charAt(0).toUpperCase() + person.slice(1) + "!");
+			//Only wish birthday if the id exists. Sometimes I use the .json file just to track birthdays.
+			if (otherBirthdays[person]["id"]){
+				var target = await client.fetchUser(otherBirthdays[person]["id"]);
+				target.send("Happy Birthday, " + person.charAt(0).toUpperCase() + person.slice(1) + "!");
+			}
 		}
 	}
 
@@ -65,7 +68,9 @@ client.once('ready', async () => {
 });
 
 client.on('message', async message => {
+	//============================
 	//Jonbot should ignore itself
+	//============================
 	if (message.author.id === botId) {
 		if (message.content === "Ending game"){
 			gaming = false;
@@ -73,10 +78,13 @@ client.on('message', async message => {
 		return;
 	}
 
+	//=======================================
+	//My bot should behave differently for me
+	//=======================================
+
 	//remove punctuation, except not periods, because i need those for decimals
 	const jonContent = message.content.toLowerCase().replace(/[@',%\?;:\(\)!~]/g, "");
 
-	//My bot should behave differently for me
 	if (message.author.id === jonId) {
 		//if I am DMing the bot, then I am giving different commands
 		if (message.guild === null){
@@ -156,9 +164,15 @@ client.on('message', async message => {
 				}
 			}
 			eightBallRig = "none";
-		}
+		} else if (jonContent === "jonbot you there" || jonContent === "jonbot you alive"){
+			message.channel.send("Yeah, I'm here");
+		} 
 		return;
 	}
+
+	//=================================
+	//How Jonbot behaves towards others
+	//=================================
 
 	//now remove periods
 	const content = jonContent.replace(/\./g, "");
