@@ -19,7 +19,6 @@ const jonChats = {
 	"jonbot you there": "Yeah, I'm here",
 	"jonbot you alive": "Yeah, I'm here",
 	"hey jonbot": "Yes, Jon?",
-	"so im working on some videos for my youtube right": "Yeah?",
 	"thanks jonbot i really appreciate it": "Yeah, anytime!"
 }
 
@@ -170,13 +169,6 @@ client.on('message', async message => {
 				}
 			}
 			eightBallRig = "none";
-		} else if (jonContent === "what do you think"){
-			rng = Math.floor(Math.random() * 2);
-			if (rng === 0){
-				message.channel.send("I think you should work on the Among Us video first. Among Us is really popular right now, so it definitely has the potential to bring in viewers.");
-			} else {
-				message.channel.send("I think you should do the Onii-Chan video first. You did the E-girl videos really well, so this could very easily bring in lots of viewers.")
-			}
 		}else{
 			let keys = Object.keys(jonChats);
 			for (let i = 0; i < keys.length; i++){
