@@ -1,4 +1,5 @@
 const Discord = require('discord.js');
+const Jokes = require('one-liner-joke');
 const {botkey, jonId, botId} = require("./config.json");
 const {otherBirthdays, appleBirthdays} = require("./birthdays.json");
 const client = new Discord.Client();
@@ -19,7 +20,8 @@ const jonChats = {
 	"jonbot you there": "Yeah, I'm here",
 	"jonbot you alive": "Yeah, I'm here",
 	"hey jonbot": "Yes, Jon?",
-	"thanks jonbot i really appreciate it": "Yeah, anytime!"
+	"thanks jonbot i really appreciate it": "Yeah, anytime!",
+	"sorry jonbot": "It's okay! I forgive you"
 }
 
 const chats = {
