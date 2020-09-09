@@ -13,6 +13,16 @@ var eightBallRig = "none";
 var gameChannel;
 var me;
 
+const jonChats = {
+	"thanks jonbot": "Gotchu, fam.",
+	"right jonbot": "Right, Jon!",
+	"jonbot you there": "Yeah, I'm here",
+	"jonbot you alive": "Yeah, I'm here",
+	"hey jonbot": "Yes, Jon?",
+	"so im working on some videos for my youtube right": "Yeah?",
+	"thanks jonbot i really appreciate it": "Yeah, anytime!"
+}
+
 const chats = {
 	jonbot: "Hello! I am Jonbot, a bot made by Jon, designed to chat exactly the way Jon would. Pleased to meet you!\n\nTry my new adventure game by chatting \"jonbotadventure\"!",
 	umi: "That's my waifuuuu~ :heart::heart_eyes::blue_heart:",
@@ -94,7 +104,7 @@ client.on('message', async message => {
 				var id = args[1];
 				var target = await client.fetchUser(id);
 				var msg = "";
-				for (var i = 2; i < args.length; i++){
+				for (let i = 2; i < args.length; i++){
 					msg += args[i] + " ";
 				}
 				target.send(msg.trim());
@@ -142,10 +152,6 @@ client.on('message', async message => {
 			var percent = parseFloat(vals[3]);
 			var denom = Math.round(numer*10000 / percent) / 100;
 			message.channel.send(`${numer} is ${percent}% of ${denom}`);
-		} else if (jonContent === "thanks jonbot"){
-			message.channel.send("Gotchu, fam.");
-		} else if (jonContent === "right jonbot"){
-			message.channel.send("Right, Jon!");
 		} else if (jonContent.match(/jonbot oh jonbot .+/)){
 			if (eightBallRig === "yes"){
 				rng = Math.floor(Math.random() * eightBallChatsPositive.length);
@@ -164,10 +170,30 @@ client.on('message', async message => {
 				}
 			}
 			eightBallRig = "none";
-		} else if (jonContent === "jonbot you there" || jonContent === "jonbot you alive"){
-			message.channel.send("Yeah, I'm here");
-		} 
+		} else if (jonContent === "what do you think"){
+			rng = Math.floor(Math.random() * 2);
+			if (rng === 0){
+				message.channel.send("I think you should work on the Among Us video first. Among Us is really popular right now, so it definitely has the potential to bring in viewers.");
+			} else {
+				message.channel.send("I think you should do the Onii-Chan video first. You did the E-girl videos really well, so this could very easily bring in lots of viewers.")
+			}
+		}else{
+			let keys = Object.keys(jonChats);
+			for (let i = 0; i < keys.length; i++){
+				if (jonContent === keys[i]){
+					message.channel.send(jonChats[keys[i]]);
+				}
+			}
+		}
 		return;
+	}
+
+	//===============================
+	//How Jonbot behaves for everyone
+	//===============================
+	//The beginnings of an urbandictionary thing
+	if (jonContent.match(/jonbot whats .*/)){
+		
 	}
 
 	//=================================
