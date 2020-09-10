@@ -1,5 +1,4 @@
 const Discord = require('discord.js');
-const Jokes = require('one-liner-joke');
 const {botkey, jonId, botId} = require("./config.json");
 const {otherBirthdays, appleBirthdays} = require("./birthdays.json");
 const client = new Discord.Client();
