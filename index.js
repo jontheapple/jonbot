@@ -14,7 +14,7 @@ var gameChannel;
 var me;
 
 const jonChats = {
-	"thanks jonbot": "Gotchu, fam.",
+	"thanks jonbot": "You're welcome, Jon-kun!",
 	"right jonbot": "Right, Jon!",
 	"jonbot you there": "Yeah, I'm here",
 	"jonbot you alive": "Yeah, I'm here",
