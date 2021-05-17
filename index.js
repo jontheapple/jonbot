@@ -20,7 +20,9 @@ const jonChats = {
 	"jonbot you alive": "Yeah, I'm here",
 	"hey jonbot": "Yes, Jon?",
 	"thanks jonbot i really appreciate it": "Yeah, anytime!",
-	"sorry jonbot": "It's okay! I forgive you"
+	"sorry jonbot": "It's okay! I forgive you",
+	"goodnight jonbot": "Good night, Jon!",
+	"good night jonbot": "Good night, Jon!",
 }
 
 const chats = {
