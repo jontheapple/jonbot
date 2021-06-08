@@ -10,7 +10,6 @@ const birthday = require("./birthdays/birthday.js");
 const jonChats = require('./jonChats.js');
 const elseChats = require('./elseChats');
 
-let gameChannel;
 let me;
 
 client.once('ready', async () => {
@@ -38,7 +37,7 @@ client.on('message', message => {
 	//How Jonbot behaves for me
 	//=======================================
 	if (jonChats.messageIsFromJon(message, jonId)) {
-		jonChats.go(message);
+		jonChats.go(message, me, client);
 		return;
 	}
 

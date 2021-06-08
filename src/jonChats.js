@@ -18,7 +18,7 @@ let jonChats = {
 	"messageIsFromJon" : (message, jonId) => {
 		return message.author.id === jonId;
 	},
-	"go" : async (message) => {
+	"go" : async (message, me, client) => {
 		//if I am DMing the bot, then I am giving different commands
 		if (message.guild === null){
 			//Remove Punctuation
