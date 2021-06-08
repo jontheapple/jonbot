@@ -5,6 +5,7 @@ var power;
 var twiddled;
 
 var game = {
+	"gaming" : false,
 	"gameIntro" : async function intro(channel){
 		await channel.send("You are sitting in the living room of your house, bored out of your mind. \"Aw man, I'm bored out of my mind\", you think to yourself. Wow, isn't this just a quality text based adventure game? Go and praise Jon later.", {file: "./images/livingroom.jpg"});
 		channel.send("Anyways, what would you like to do?\n1. Play video games\n2. Browse the internet\n3. Twiddle your thumbs\n\n(To pick an option, simply chat that number. For example, to twiddle your thumbs, chat \"3\". To end the game, chat \"endgame\")");
