@@ -96,7 +96,8 @@ client.on('message', async message => {
 			} else if (command === "rig8ball"){
 				eightball.rig(args[1], me);
 			} else if (command === "commands"){
-				me.send("message (targetID) (message)+")
+				me.send("message (targetID) (message)+");
+				me.send("rig8ball (how to rig)");
 			}
 		}
 		
