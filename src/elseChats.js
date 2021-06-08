@@ -26,26 +26,23 @@ let elseChats = {
 		}
 
 		if (content === "jonbotadventure"){
-			if (!game.gaming){
+			if (!game.isGaming(message.author, message.channel)){
 				message.channel.send("Jonbot Adventure is starting...");
-				gameChannel = message.channel;
-				game.gameIntro(gameChannel);
-				game.gaming = true;
+				game.newGame(message.author, message.channel);
 			} else {
-				message.channel.send("Game is already running");
+				message.channel.send("You are already playing Jonbot Adventure");
 			}
 			return;
 		}
 	
-		if (game.gaming){
-			if (game.gaming && message.channel === gameChannel){
-				if (content === "endgame"){
-					message.channel.send("Ending game");
-					return;
-				}
-				game.gameLoop(content, message.channel);
+		if (game.isGaming(message.author, message.channel)){
+			if (content === "endgame"){
+				message.channel.send("Ending game");
+				game.endGame(message.author, message.channel);
 				return;
 			}
+			game.gameLoop(message.author, content, message.channel);
+			return;
 		}
 	
 		if (content.match(/jonbot oh jonbot .+/)){

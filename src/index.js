@@ -10,9 +10,7 @@ const birthday = require("./birthdays/birthday.js");
 const jonChats = require('./jonChats.js');
 const elseChats = require('./elseChats');
 
-// const fs = require("fs");
-
-var gameChannel;
+let gameChannel;
 let me;
 
 client.once('ready', async () => {
