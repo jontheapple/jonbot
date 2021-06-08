@@ -1,17 +1,18 @@
 const Discord = require('discord.js');
-const {botkey, jonId, botId} = require("./config.json");
-const {otherBirthdays, appleBirthdays} = require("./birthdays.json");
+const {botkey, jonId, botId} = require("../config.json");
+const {otherBirthdays, appleBirthdays} = require("../birthdays.json");
 const client = new Discord.Client();
+
 
 const game = require("./game.js");
 const sender = require("./sender.js");
+const eightball = require('./eightball.js');
 
 // const fs = require("fs");
 
 var gaming = false;
-var eightBallRig = "none";
 var gameChannel;
-var me;
+let me;
 
 const jonChats = {
 	"thanks jonbot": "You're welcome, Jon-kun!",
@@ -33,24 +34,6 @@ const chats = {
 	miko: "Mikooooo so cute :heart:",
 	waifu: "Waifu? Did someone say \"waifu\"? You can't have a conversation about waifus without including meeeee..."
 }
-
-const eightBallChatsPositive = [
-	"Yup!",
-	"Yes!",
-	"Yeah!",
-	"Bet.",
-	"Almost certainly",
-	"It would seem to be the case",
-	"I believe so",
-	"Yaaaaaaaaaaas"
-]
-
-const eightBallChatsNegative = [
-	"Doesn't seem like it...",
-	"My Jonbot senses say it ain't so",
-	"I wouldn't count on it",
-	"That doesn't sound right..."
-]
 
 client.once('ready', async () => {
 	var today = new Date();
@@ -100,32 +83,26 @@ client.on('message', async message => {
 	if (message.author.id === jonId) {
 		//if I am DMing the bot, then I am giving different commands
 		if (message.guild === null){
-			var args = jonContent.split(" ");
-			var command = args[0];
+			let args = jonContent.split(" ");
+			let command = args[0];
 			if (command === "message"){
-				var id = args[1];
-				var target = await client.fetchUser(id);
-				var msg = "";
+				let id = args[1];
+				let target = await client.fetchUser(id);
+				let msg = "";
 				for (let i = 2; i < args.length; i++){
 					msg += args[i] + " ";
 				}
 				target.send(msg.trim());
 			} else if (command === "rig8ball"){
-				if (args[1] === "yes"){
-					eightBallRig = "yes";
-					me.send("Your next answer will be \"yes\"");
-				} else if (args[1] === "no"){
-					eightBallRig = "no";
-					me.send("Your next answer will be \"no\"");
-				} else{
-					me.send("I didn't understand you");
-				}
+				eightball.rig(args[1], me);
+			} else if (command === "commands"){
+				me.send("message (targetID) (message)+")
 			}
 		}
 		
 		//Otherwise, these commands are for use in a server
 		else if (jonContent === "jonbot flip a coin"){
-			var rng = Math.floor(Math.random() * 2);
+			let rng = Math.floor(Math.random() * 2);
 			if (rng === 0){
 				message.channel.send("Heads");
 			} else {
@@ -155,23 +132,7 @@ client.on('message', async message => {
 			var denom = Math.round(numer*10000 / percent) / 100;
 			message.channel.send(`${numer} is ${percent}% of ${denom}`);
 		} else if (jonContent.match(/jonbot oh jonbot .+/)){
-			if (eightBallRig === "yes"){
-				rng = Math.floor(Math.random() * eightBallChatsPositive.length);
-				message.channel.send(eightBallChatsPositive[rng]);
-			} else if (eightBallRig === "no"){
-				rng = Math.floor(Math.random() * eightBallChatsNegative.length);
-				message.channel.send(eightBallChatsNegative[rng]);
-			} else{
-				var rng = Math.floor(Math.random() * 3);
-				if (rng === 0){
-					rng = Math.floor(Math.random() * eightBallChatsNegative.length);
-					message.channel.send(eightBallChatsNegative[rng]);
-				} else {
-					rng = Math.floor(Math.random() * eightBallChatsPositive.length);
-					message.channel.send(eightBallChatsPositive[rng]);
-				}
-			}
-			eightBallRig = "none";
+			eightball.jonGo(message.channel);
 		}else{
 			let keys = Object.keys(jonChats);
 			for (let i = 0; i < keys.length; i++){
@@ -233,14 +194,7 @@ client.on('message', async message => {
 	}
 
 	if (content.match(/jonbot oh jonbot .+/)){
-		var rng = Math.floor(Math.random() * 3);
-		if (rng === 0){
-			rng = Math.floor(Math.random() * eightBallChatsNegative.length);
-			message.channel.send(eightBallChatsNegative[rng]);
-		} else {
-			rng = Math.floor(Math.random() * eightBallChatsPositive.length);
-			message.channel.send(eightBallChatsPositive[rng]);
-		}
+		eightball.go(message.channel);
 	} else if (checkForString(content, "jonbot")){
 		message.channel.send(chats.jonbot);
 		return;
