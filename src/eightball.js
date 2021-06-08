@@ -1,3 +1,5 @@
+//This file handles the eightball feature
+
 const eightBallChatsPositive = [
 	"Yup!",
 	"Yes!",

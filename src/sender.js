@@ -1,3 +1,5 @@
+//This file holds a helper function to send a message to a specific channel of a specific server
+
 var sender = {
 	"findAndSend" : function(client, guildName, channelName, message){
 		var guildKeys = client.guilds.keys();

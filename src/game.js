@@ -1,3 +1,5 @@
+//This file holds game logic for Jonbot Adventure
+
 var location;
 var power;
 var twiddled;
