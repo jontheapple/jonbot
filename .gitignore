@@ -1,0 +1,7 @@
+birthdays/
+config.json
+config test.json
+images/
+node_modules/
+package-lock.json
+src/test.js
