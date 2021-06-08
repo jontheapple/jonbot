@@ -3,7 +3,8 @@ const {birthdays} = require("../../birthdays/appleBirthdays.json");
 const sender = require("../sender.js");
 
 let applesquadBirthday = {
-	"go" : (client, today) => {
+	"go" : (client) => {
+		let today = new Date();
 		let people = Object.keys(birthdays);
 		for (const person of people){
 			let birthday = new Date(birthdays[person]);

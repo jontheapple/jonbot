@@ -1,7 +1,8 @@
 const {birthdays} = require("../../birthdays/birthdays.json");
 
 let birthday = {
-	"go" : async (client, today) => {
+	"go" : async (client) => {
+		let today = new Date();
 		let people = Object.keys(birthdays);
 		for (const person of people){
 			let personBirthday = new Date(birthdays[person].birthday);
