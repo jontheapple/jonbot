@@ -27,7 +27,7 @@ const jonChats = {
 }
 
 const chats = {
-	jonbot: "Hello! I am Jonbot, a bot made by Jon, designed to chat exactly the way Jon would. Pleased to meet you!\n\nTry my new adventure game by chatting \"jonbotadventure\"!",
+	jonbot: "Hello! I am Jonbot, a bot made by Jon, designed to chat exactly the way Jon would. Pleased to meet you!",
 	umi: "That's my waifuuuu~ :heart::heart_eyes::blue_heart:",
 	jonGreet: "Hello!",
 	cutegirl: "*sweats nervously*",
