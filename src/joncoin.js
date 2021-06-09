@@ -38,7 +38,7 @@ function writeBank(channel, bank){
 //returns the index on the "bank" array corresponding to the current user, or returns -1 if current user is not currently registered
 function getWalletIndex(bank, id){
 	for (let i = 0; i < bank.length; i++){
-		if (bank[i].id = id) return i;
+		if (bank[i].id === id) return i;
 	}
 	return -1;
 }
@@ -49,6 +49,7 @@ function getWallet(user, bank, channel){
 	if (bankInd === -1){
 		bank.push({"id": user.id, "joncoins": 0});
 		bankInd = bank.length - 1;
+		console.log(bank.length);
 		writeBank(channel, bank);
 	}
 	return bank[bankInd];
