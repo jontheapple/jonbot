@@ -7,6 +7,7 @@ const client = new Discord.Client();
 const applesquadBirthday = require("./birthdays/applesquadBirthday.js");
 const birthday = require("./birthdays/birthday.js");
 const jonChats = require('./jonChats.js');
+const allChats = require("./allChats.js");
 const elseChats = require('./elseChats');
 
 let me;
@@ -26,14 +27,15 @@ client.on('message', message => {
 	//============================
 	if (message.author.id === botId);
 
+	//===============================
+	//How Jonbot behaves for everyone
+	//===============================
+	else if (allChats.go(message));
+
 	//=======================================
 	//How Jonbot behaves for me
 	//=======================================
 	else if (jonChats.messageIsFromJon(message, jonId)) jonChats.go(message, me, client);
-
-	//===============================
-	//How Jonbot behaves for everyone
-	//===============================
 
 	//=================================
 	//How Jonbot behaves towards others
