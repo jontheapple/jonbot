@@ -28,7 +28,7 @@ function readBank(channel){
 //writes the bank to the json file
 function writeBank(channel, bank){
 	try {
-		fs.writeFileSync("./joncoin.json", JSON.stringify(bank));
+		fs.writeFileSync("./joncoin.json", JSON.stringify(bank).replace("},{", "}\n,{"));
 	} catch (err){
 		reportError("JONCOIN2", channel);
 		console.log(err);
@@ -61,7 +61,11 @@ function earnJoncoin(user, channel){
 	let wallet = getWallet(user, bank, channel);
 	wallet.joncoins++;
 	writeBank(channel, bank);
-	channel.send(user.username + ", you now have " + wallet.joncoins + " Joncoins!");
+	if (wallet.joncoins === 1){
+		channel.send(user.username + ", you now have " + wallet.joncoins + " Joncoin!");
+	} else {
+		channel.send(user.username + ", you now have " + wallet.joncoins + " Joncoins!");
+	}
 }
 
 let joncoin = {
