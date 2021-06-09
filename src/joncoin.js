@@ -104,6 +104,7 @@ function giveCoins(user, recipientName, numCoins, channel){
 		} else{
 			userWallet.joncoins = userWallet.joncoins - numCoins;
 			recipientWallet[0].joncoins = recipientWallet[0].joncoins + numCoins;
+			channel.send("Successfully transferred " + numCoins + " Joncoins to " + recipientName);
 			writeBank(channel, bank);
 		}
 	} else {

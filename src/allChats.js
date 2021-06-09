@@ -13,8 +13,8 @@ let allChats = {
 			joncoin.checkBalance(message.author, message.channel);
 			return true;
 		}
-		content = message.content.toLowerCase().replace(/[@',%\?;:\(\)!~\.]/g, "");
-		if (content.match(/give \w+ \d+ joncoin/) || content.match(/give \w+ \d+ joncoins/)){
+		content = message.content.toLowerCase()
+		if (content.match(/give .+ \d+ joncoin/) || content.match(/give .+ \d+ joncoins/)){
 			let vals = content.split(" ");
 			let transferAmt = parseInt(vals[2]);
 			if (Number.isNaN(transferAmt)) {
