@@ -28,7 +28,7 @@ function readBank(channel){
 //writes the bank to the json file
 function writeBank(channel, bank){
 	try {
-		fs.writeFileSync("./joncoin.json", JSON.stringify(bank).replace("},{", "}\n,{"));
+		fs.writeFileSync("./joncoin.json", JSON.stringify(bank).replace(/},{/, "}\n,{"));
 	} catch (err){
 		reportError("JONCOIN2", channel);
 		console.log(err);
@@ -47,12 +47,82 @@ function getWalletIndex(bank, id){
 function getWallet(user, bank, channel){
 	let bankInd = getWalletIndex(bank, user.id);
 	if (bankInd === -1){
-		bank.push({"id": user.id, "joncoins": 0});
+		bank.push({"id": user.id, "joncoins": 0, "username": user.username});
 		bankInd = bank.length - 1;
 		console.log(bank.length);
 		writeBank(channel, bank);
 	}
 	return bank[bankInd];
+}
+
+//returns an array of wallets with username and optionally discriminator matching the given username and discriminator
+function getWalletByUsername(username, bank, discriminator = ""){
+	let ret = [];
+	for (let i = 0; i < bank.length; i++){
+		if (bank[i].username === username){
+			if (discriminator === "") ret.push(bank[i]);
+			else {
+				if (bank[i].discriminator === discriminator) ret.push(bank[i]);
+			}
+		}
+	}
+
+	return ret;
+}
+
+//checks the user's joncoin balance
+function checkBalance(user, channel){
+	let bank = readBank(channel);
+	let wallet = getWallet(user,bank,channel);
+	if (wallet.joncoins === 1){
+		channel.send(user.username + ", you have " + wallet.joncoins + " Joncoin!");
+	} else if (wallet.joncoins === 69){
+		channel.send(user.username + ", you have " + wallet.joncoins + " Joncoins. Nice!");
+	} else {
+		channel.send(user.username + ", you have " + wallet.joncoins + " Joncoins!");
+	}
+}
+
+//allows a user to give joncoins to another user
+function giveCoins(user, recipientName, numCoins, channel){
+	//Handle user trying to "give negative coins"
+	if (numCoins < 0){
+		channel.send("Nice try, " + user.username + ".")
+		return;
+	}
+
+	let bank = readBank(channel);
+	let userWallet = getWallet(user, bank, channel);
+	if (recipientName.includes("#")){
+		//use discriminator
+		let recipientNameParts = recipientName.split('#');
+		let recipientWallet = getWalletByUsername(recipientNameParts[0], bank, recipientNameParts[1]);
+		if (recipientWallet.length === 0){
+			channel.send("Did not find registered Joncoin owner with username " + recipientName + ".");
+		} else if (userWallet.joncoins < numCoins){
+			channel.send("Your balance is not high enough to send that many Joncoins.");
+		} else{
+			userWallet.joncoins = userWallet.joncoins - numCoins;
+			recipientWallet[0].joncoins = recipientWallet[0].joncoins + numCoins;
+			writeBank(channel, bank);
+		}
+	} else {
+		//don't use discriminator
+		let recipientWallet = getWalletByUsername(recipientName, bank);
+		if (recipientWallet.length === 0){
+			channel.send("Did not find registered Joncoin owner with username " + recipientName + ".");
+		} else if (recipientWallet.length > 1){
+			channel.send("Found multiple registered Joncoin owners with username " + recipientName + ". Please add a numeric discriminator to your recipient name (e.g. Jontheapple#9999).");
+		} else if (userWallet.joncoins < numCoins){
+			channel.send("Your balance is not high enough to send that many Joncoins.");
+		} else{
+			userWallet.joncoins = userWallet.joncoins - numCoins;
+			recipientWallet[0].joncoins = recipientWallet[0].joncoins + numCoins;
+			channel.send("Successfully transferred " + numCoins + " Joncoins to " + recipientName);
+			writeBank(channel, bank);
+		}
+	}
+	
 }
 
 //basic joncoin earnage function, earns the user 1 joncoin
@@ -63,13 +133,17 @@ function earnJoncoin(user, channel){
 	writeBank(channel, bank);
 	if (wallet.joncoins === 1){
 		channel.send(user.username + ", you now have " + wallet.joncoins + " Joncoin!");
+	} else if (wallet.joncoins === 69){
+		channel.send(user.username + ", you have " + wallet.joncoins + " Joncoins. Nice!");
 	} else {
 		channel.send(user.username + ", you now have " + wallet.joncoins + " Joncoins!");
 	}
 }
 
 let joncoin = {
-	"earnJoncoin" : earnJoncoin
+	"earnJoncoin" : earnJoncoin,
+	"checkBalance" : checkBalance,
+	"giveCoins" : giveCoins
 };
 
 module.exports = joncoin;
