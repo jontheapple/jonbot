@@ -38,7 +38,7 @@ function reportError(errcode, channel){
 //returns the index on the "saves" array corresponding to the current player, or returns -1 if current player is not currently registered
 function getPlayerIndex(saves, id){
 	for (let i = 0; i < saves.length; i++){
-		if (saves[i].id = id) return i;
+		if (saves[i].id === id) return i;
 	}
 	return -1;
 }
