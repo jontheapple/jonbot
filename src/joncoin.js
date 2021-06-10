@@ -47,7 +47,7 @@ function getWalletIndex(bank, id){
 function getWallet(user, bank, channel){
 	let bankInd = getWalletIndex(bank, user.id);
 	if (bankInd === -1){
-		bank.push({"id": user.id, "joncoins": 0, "username": user.username});
+		bank.push({"id": user.id, "joncoins": 0, "username": user.username, "discriminator": user.discriminator});
 		bankInd = bank.length - 1;
 		console.log(bank.length);
 		writeBank(channel, bank);
@@ -135,7 +135,7 @@ function earnJoncoin(user, channel){
 	if (wallet.joncoins === 1){
 		channel.send(user.username + ", you now have " + wallet.joncoins + " Joncoin!");
 	} else if (wallet.joncoins === 69){
-		channel.send(user.username + ", you have " + wallet.joncoins + " Joncoins. Nice!");
+		channel.send(user.username + ", you now have " + wallet.joncoins + " Joncoins. Nice!");
 	} else {
 		channel.send(user.username + ", you now have " + wallet.joncoins + " Joncoins!");
 	}
