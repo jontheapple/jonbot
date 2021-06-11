@@ -72,6 +72,7 @@ function endGame(player, channel){
 	const save = saves[getPlayerIndex(saves, player.id)];
 	save.gaming = false;
 	writeSaves(channel, saves);
+	channel.send("Game ended");
 }
 
 //checks if the player is currently gaming

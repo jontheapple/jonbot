@@ -85,8 +85,6 @@ let jonChats = {
 			} else if (jonContent === "jonbot roll a dice"){
 				let rng = Math.floor(Math.random() * 6) + 1;
 				message.channel.send(`You rolled a ${rng}`);
-			} else if (jonContent === "endgame"){
-				message.channel.send("Ending game");
 			} else if (jonContent.match(/jonbot oh jonbot .+/)){
 				eightball.jonGo(message.channel);
 			}else{

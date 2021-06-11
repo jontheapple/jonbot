@@ -37,7 +37,6 @@ let elseChats = {
 	
 		if (game.isGaming(message.author, message.channel)){
 			if (content === "endgame"){
-				message.channel.send("Ending game");
 				game.endGame(message.author, message.channel);
 				return;
 			}
