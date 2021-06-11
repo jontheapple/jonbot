@@ -28,7 +28,7 @@ function readBank(channel){
 //writes the bank to the json file
 function writeBank(channel, bank){
 	try {
-		fs.writeFileSync("./joncoin.json", JSON.stringify(bank).replace(/},{/, "}\n,{"));
+		fs.writeFileSync("./joncoin.json", JSON.stringify(bank).replace(/},{/g, "}\n,{"));
 	} catch (err){
 		reportError("JONCOIN2", channel);
 		console.log(err);

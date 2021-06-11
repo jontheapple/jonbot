@@ -23,7 +23,7 @@ function readSaves(channel){
 //writes the saves to the file
 function writeSaves(channel, saves){
 	try {
-		fs.writeFileSync("./savedata.json", JSON.stringify(saves));
+		fs.writeFileSync("./savedata.json", JSON.stringify(saves).replace(/},{/g, "}\n,{"));
 	} catch (err){
 		reportError("GAME2", channel);
 		console.log(err);
