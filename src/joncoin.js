@@ -141,10 +141,39 @@ function earnJoncoin(user, channel){
 	}
 }
 
+//remove joncoins from user's wallet. returns true on success, otherwise returns false.
+function removeJoncoins(user, amt, channel){
+	let bank = readBank(channel);
+	let wallet = getWallet(user, bank, channel);
+	if (wallet.joncoins < amt){
+		channel.send("You do not have enough Joncoins to do that.");
+		return false;
+	} else{
+		wallet.joncoins = wallet.joncoins - amt;
+		if (wallet.joncoins === 1){
+			channel.send(user.username + ", you now have " + wallet.joncoins + " Joncoin!");
+		} else if (wallet.joncoins === 69){
+			channel.send(user.username + ", you now have " + wallet.joncoins + " Joncoins. Nice!");
+		} else {
+			channel.send(user.username + ", you now have " + wallet.joncoins + " Joncoins!");
+		}
+		writeBank(channel, bank);
+		return true;
+	}
+}
+
+//function for the "game time with Jon" product
+function productGameTime(user, channel){
+	if (removeJoncoins(user, 350, channel)){
+		channel.send(user.username + ", you have successfully purchased 30 minutes of game time (game of your choice) with Jon!");
+	}
+}
+
 let joncoin = {
 	"earnJoncoin" : earnJoncoin,
 	"checkBalance" : checkBalance,
-	"giveCoins" : giveCoins
+	"giveCoins" : giveCoins,
+	"productGameTime": productGameTime
 };
 
 module.exports = joncoin;

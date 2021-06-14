@@ -13,6 +13,16 @@ let allChats = {
 			joncoin.checkBalance(message.author, message.channel);
 			return true;
 		}
+		if (content === "jonbot what are you selling"){
+			message.channel.send("I am selling the following items!\n1. Game time with Jon for 350 Joncoins(gametime)\n2. More items coming soon!\nTo buy an item, type \"buy <word_in_parenthesis>\". For example, to buy game time with Jon, type \"buy gametime\"");
+			return true;
+		}
+		if (content === "buy gametime"){
+			joncoin.productGameTime(message.author, message.channel);
+			return true;
+		}
+
+
 		content = message.content.toLowerCase()
 		if (content.match(/give .+ \d+ joncoin/) || content.match(/give .+ \d+ joncoins/)){
 			let vals = content.split(" ");
