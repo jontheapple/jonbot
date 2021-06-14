@@ -70,17 +70,24 @@ function getWalletByUsername(username, bank, discriminator = ""){
 	return ret;
 }
 
+//display Joncoins helper function
+function display(user, channel, amt, now = ""){
+	if (amt === 1){
+		channel.send(user.username + ", you " + now + "have " + amt + " Joncoin!");
+	} else if (amt === 69){
+		channel.send(user.username + ", you " + now + "have " + amt + " Joncoins. Nice!");
+	} else if (amt === 420){
+		channel.send(user.username + ", you " + now + "have " + amt + " Joncoins. Blaze it!");
+	} else {
+		channel.send(user.username + ", you " + now + "have " + amt + " Joncoins!");
+	}
+}
+
 //checks the user's joncoin balance
 function checkBalance(user, channel){
 	let bank = readBank(channel);
 	let wallet = getWallet(user,bank,channel);
-	if (wallet.joncoins === 1){
-		channel.send(user.username + ", you have " + wallet.joncoins + " Joncoin!");
-	} else if (wallet.joncoins === 69){
-		channel.send(user.username + ", you have " + wallet.joncoins + " Joncoins. Nice!");
-	} else {
-		channel.send(user.username + ", you have " + wallet.joncoins + " Joncoins!");
-	}
+	display(user, channel, wallet.joncoins);
 }
 
 //allows a user to give joncoins to another user
@@ -132,13 +139,7 @@ function earnJoncoin(user, channel){
 	let wallet = getWallet(user, bank, channel);
 	wallet.joncoins++;
 	writeBank(channel, bank);
-	if (wallet.joncoins === 1){
-		channel.send(user.username + ", you now have " + wallet.joncoins + " Joncoin!");
-	} else if (wallet.joncoins === 69){
-		channel.send(user.username + ", you now have " + wallet.joncoins + " Joncoins. Nice!");
-	} else {
-		channel.send(user.username + ", you now have " + wallet.joncoins + " Joncoins!");
-	}
+	display(user, channel, wallet.joncoins, "now ");
 }
 
 //remove joncoins from user's wallet. returns true on success, otherwise returns false.
@@ -150,13 +151,7 @@ function removeJoncoins(user, amt, channel){
 		return false;
 	} else{
 		wallet.joncoins = wallet.joncoins - amt;
-		if (wallet.joncoins === 1){
-			channel.send(user.username + ", you now have " + wallet.joncoins + " Joncoin!");
-		} else if (wallet.joncoins === 69){
-			channel.send(user.username + ", you now have " + wallet.joncoins + " Joncoins. Nice!");
-		} else {
-			channel.send(user.username + ", you now have " + wallet.joncoins + " Joncoins!");
-		}
+		display(user, channel, wallet.joncoins, "now ");
 		writeBank(channel, bank);
 		return true;
 	}
