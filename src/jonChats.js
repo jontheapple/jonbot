@@ -46,25 +46,25 @@ let jonChats = {
 			let jonContent = message.content.toLowerCase().replace(/[@',%\?;:\(\)!~]/g, "");
 
 			//Percentage calculation requires periods
-			if (jonContent.match(/jonbot what is \d+(\.\d+)* of \d+(\.\d+)*/)){
+			if (jonContent.match(/^jonbot what is \d+(\.\d+)* of \d+(\.\d+)*$/)){
 				let vals = jonContent.split(" ");
 				let percent = parseFloat(vals[3]);
 				let denom = parseFloat(vals[5]);
 				let numer = Math.round(denom * percent) / 100;
 				message.channel.send(`${numer} is ${percent}% of ${denom}`);
-			} else if (jonContent.match(/jonbot \d+(\.\d+)* is what of \d+(\.\d+)*/)){
+			} else if (jonContent.match(/^jonbot \d+(\.\d+)* is what of \d+(\.\d+)*$/)){
 				let vals = jonContent.split(" ");
 				let numer = parseFloat(vals[1]);
 				let denom = parseFloat(vals[5]);
 				let percent = Math.round(numer * 10000 / denom) / 100;
 				message.channel.send(`${numer} is ${percent}% of ${denom}`);
-			} else if (jonContent.match(/jonbot \d+(\.\d+)* is what percent of \d+(\.\d+)*/)){
+			} else if (jonContent.match(/^jonbot \d+(\.\d+)* is what percent of \d+(\.\d+)*$/)){
 				let vals = jonContent.split(" ");
 				let numer = parseFloat(vals[1]);
 				let denom = parseFloat(vals[6]);
 				let percent = Math.round(numer * 10000 / denom) / 100;
 				message.channel.send(`${numer} is ${percent}% of ${denom}`);
-			}else if (jonContent.match(/jonbot \d+(\.\d+)* is \d+(\.\d+)* of what/)){
+			}else if (jonContent.match(/^jonbot \d+(\.\d+)* is \d+(\.\d+)* of what$/)){
 				let vals = jonContent.split(" ");
 				let numer = parseFloat(vals[1]);
 				let percent = parseFloat(vals[3]);
@@ -85,7 +85,7 @@ let jonChats = {
 			} else if (jonContent === "jonbot roll a dice"){
 				let rng = Math.floor(Math.random() * 6) + 1;
 				message.channel.send(`You rolled a ${rng}`);
-			} else if (jonContent.match(/jonbot oh jonbot .+/)){
+			} else if (jonContent.match(/^jonbot oh jonbot .+/)){
 				eightball.jonGo(message.channel);
 			}else{
 				let keys = Object.keys(chats);

@@ -45,7 +45,7 @@ let elseChats = {
 			return;
 		}
 	
-		if (content.match(/jonbot oh jonbot .+/)){
+		if (content.match(/^jonbot oh jonbot .+/)){
 			eightball.go(message.channel);
 		} else if (checkForString(content, "jonbot")){
 			message.channel.send(chats.jonbot);
@@ -100,7 +100,7 @@ let elseChats = {
 		}
 
 		content = message.content.toLowerCase()
-		if (content.match(/give .+ \d+ joncoin/) || content.match(/give .+ \d+ joncoins/)){
+		if (content.match(/^give .+ \d+ joncoin$/) || content.match(/^give .+ \d+ joncoins$/)){
 			let vals = content.split(" ");
 			let transferAmt = parseInt(vals[2]);
 			if (Number.isNaN(transferAmt)) {
