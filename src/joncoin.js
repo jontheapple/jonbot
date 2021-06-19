@@ -49,7 +49,6 @@ function getWallet(user, bank, channel){
 	if (bankInd === -1){
 		bank.push({"id": user.id, "joncoins": 0, "username": user.username, "discriminator": user.discriminator});
 		bankInd = bank.length - 1;
-		console.log(bank.length);
 		writeBank(channel, bank);
 	}
 	return bank[bankInd];
@@ -87,6 +86,7 @@ function display(user, channel, amt, now = ""){
 function checkBalance(user, channel){
 	let bank = readBank(channel);
 	let wallet = getWallet(user,bank,channel);
+	updateAccount(user, bank, wallet, channel);
 	display(user, channel, wallet.joncoins);
 }
 
@@ -112,7 +112,7 @@ function giveCoins(user, recipientName, numCoins, channel){
 			userWallet.joncoins = userWallet.joncoins - numCoins;
 			recipientWallet[0].joncoins = recipientWallet[0].joncoins + numCoins;
 			channel.send("Successfully transferred " + numCoins + " Joncoins to " + recipientName);
-			writeBank(channel, bank);
+			updateAccount(user, bank, userWallet, channel);
 		}
 	} else {
 		//don't use discriminator
@@ -127,7 +127,7 @@ function giveCoins(user, recipientName, numCoins, channel){
 			userWallet.joncoins = userWallet.joncoins - numCoins;
 			recipientWallet[0].joncoins = recipientWallet[0].joncoins + numCoins;
 			channel.send("Successfully transferred " + numCoins + " Joncoins to " + recipientName);
-			writeBank(channel, bank);
+			updateAccount(user, bank, userWallet, channel);
 		}
 	}
 	
@@ -138,7 +138,7 @@ function earnJoncoin(user, channel){
 	let bank = readBank(channel);
 	let wallet = getWallet(user, bank, channel);
 	wallet.joncoins++;
-	writeBank(channel, bank);
+	updateAccount(user, bank, wallet, channel);
 	display(user, channel, wallet.joncoins, "now ");
 }
 
@@ -155,6 +155,13 @@ function removeJoncoins(user, amt, channel){
 		writeBank(channel, bank);
 		return true;
 	}
+}
+
+//writes the bank with updates to user's info
+function updateAccount(user, bank, wallet, channel){
+	wallet.username = user.username;
+	wallet.discriminator = user.discriminator;
+	writeBank(channel, bank);
 }
 
 //function for the "game time with Jon" product
