@@ -1,6 +1,7 @@
 //This file handles the bot's responses to anybody who isn't Jon
 const eightball = require('./eightball.js');
 const game = require('./game.js');
+const coin = require('./coin.js');
 
 const chats = {
 	jonbot: "Hello! I am Jonbot, a bot made by Jon, designed to chat exactly the way Jon would. Pleased to meet you!",
@@ -17,7 +18,7 @@ function checkForString(word, match){
 
 let elseChats = {
 	"go" : (message, me) => {
-		const content = message.content.toLowerCase().replace(/[@',%\?;:\(\)!~\.]/g, "");
+		let content = message.content.toLowerCase().replace(/[@',%\?;:\(\)!~\.]/g, "");
 		//Someone (not me) is DMing Jonbot
 		if (message.guild === null){
 			me.send(message.author.username + " says:\n");
@@ -76,6 +77,38 @@ let elseChats = {
 		}
 		if (checkForString(content, "waifu")){
 			message.channel.send(chats.waifu);
+		}
+
+		//Joncoin handling
+		content = message.content.toLowerCase().replace(/[@',%\?;:\(\)!~\.]/g, "");
+
+		if (content === "earn joncoin"){
+			coin.earnJoncoin(message.author, message.channel);
+			return;
+		}
+		if (content === "check joncoin balance" || content === "check joncoins" || content === "joncoins"){
+			coin.checkBalance(message.author, message.channel);
+			return;
+		}
+		if (content === "jonbot what are you selling"){
+			message.channel.send("I am selling the following items!\n1. Game time with Jon for 350 Joncoins(gametime)\n2. More items coming soon!\nTo buy an item, type \"buy <word_in_parenthesis>\". For example, to buy game time with Jon, type \"buy gametime\"");
+			return;
+		}
+		if (content === "buy gametime"){
+			coin.productGameTime(message.author, message.channel);
+			return;
+		}
+
+		content = message.content.toLowerCase()
+		if (content.match(/give .+ \d+ joncoin/) || content.match(/give .+ \d+ joncoins/)){
+			let vals = content.split(" ");
+			let transferAmt = parseInt(vals[2]);
+			if (Number.isNaN(transferAmt)) {
+				message.channel.send("You must enter a numeric value for the transfer amount.");
+				return;
+			}
+			coin.giveCoins(message.author, vals[1].toLowerCase(), transferAmt, message.channel);
+			return;
 		}
 	}
 };

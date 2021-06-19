@@ -1,4 +1,4 @@
-//This file handles Jonbot's cryptocurrency, Joncoin
+//This file handles Jonbot's cryptocurrency, Joncoin. Handles for people who are not Jon.
 const fs = require("fs");
 
 try {
@@ -171,11 +171,11 @@ function productGameTime(user, channel){
 	}
 }
 
-let joncoin = {
+let coin = {
 	"earnJoncoin" : earnJoncoin,
 	"checkBalance" : checkBalance,
 	"giveCoins" : giveCoins,
 	"productGameTime": productGameTime
 };
 
-module.exports = joncoin;
+module.exports = coin;
